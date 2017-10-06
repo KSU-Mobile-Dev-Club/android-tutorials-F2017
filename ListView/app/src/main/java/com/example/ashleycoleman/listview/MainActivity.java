@@ -1,6 +1,7 @@
 package com.example.ashleycoleman.listview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,7 +33,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Pokemon pokemon = pokemonList.get(position);
-                Toast.makeText(context, pokemon.name, Toast.LENGTH_SHORT).show();
+
+                Intent detailIntent = new Intent(context, PokemonDetailActivity.class);
+                detailIntent.putExtra("pokemon", pokemon);
+
+                startActivity(detailIntent);
             }
         });
 

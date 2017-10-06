@@ -5,6 +5,8 @@ package com.example.ashleycoleman.listview;
  */
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,7 +15,7 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class Pokemon {
+public class Pokemon implements Parcelable {
 
     public String name;
     public int id;
@@ -63,4 +65,32 @@ public class Pokemon {
 
         return json;
     }
+
+    public int describeContents() {
+        return hashCode();
+    }
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(id);
+        out.writeString(name);
+        out.writeString(imageUrl);
+    }
+
+    public Pokemon() {
+    }
+
+    public Pokemon(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        imageUrl = in.readString();
+    }
+
+    public static final Parcelable.Creator<Pokemon> CREATOR = new Parcelable.Creator<Pokemon>() {
+        public Pokemon createFromParcel(Parcel in) {
+            return new Pokemon(in);
+        }
+        public Pokemon[] newArray(int size) {
+            return new Pokemon[size];
+        }
+    };
 }

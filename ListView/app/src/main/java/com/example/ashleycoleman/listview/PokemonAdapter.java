@@ -49,7 +49,7 @@ public class PokemonAdapter extends BaseAdapter {
         Pokemon pokemon = (Pokemon)getItem(i);
 
         TextView title = (TextView)rowView.findViewById(R.id.titleTextView);
-        title.setText(pokemon.name + " " + Integer.toString(i));
+        title.setText(pokemon.name);
 
         ImageView imageView = (ImageView)rowView.findViewById(R.id.pokemonImageView);
 
