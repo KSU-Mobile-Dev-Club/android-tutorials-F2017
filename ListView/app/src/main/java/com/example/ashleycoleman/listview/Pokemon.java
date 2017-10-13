@@ -21,13 +21,15 @@ public class Pokemon implements Parcelable {
     public int id;
     public String imageUrl;
 
-    public static ArrayList<Pokemon> getPokemonFromFile(String filename, Context context){
+    public static ArrayList<Pokemon> getPokemonFromFile(String filename, Context context) {
+        return getPokemonFromString(loadJsonFromAsset(filename, context));
+    }
+
+    public static ArrayList<Pokemon> getPokemonFromJSON(JSONObject json) {
         final ArrayList<Pokemon> pokemonList = new ArrayList<>();
 
         try {
             // Load data
-            String jsonString = loadJsonFromAsset(filename, context);
-            JSONObject json = new JSONObject(jsonString);
             JSONArray pokemon = json.getJSONArray("results");
 
             // Get Recipe objects from data
@@ -45,6 +47,19 @@ public class Pokemon implements Parcelable {
         }
 
         return pokemonList;
+    }
+
+    public static ArrayList<Pokemon> getPokemonFromString(String jsonString){
+        final ArrayList<Pokemon> pokemonList = new ArrayList<>();
+
+        try {
+            // Load data
+            JSONObject json = new JSONObject(jsonString);
+            return getPokemonFromJSON(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<Pokemon>();
     }
 
     private static String loadJsonFromAsset(String filename, Context context) {
